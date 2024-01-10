@@ -1,4 +1,4 @@
-Function Get-1PassSecret {
+Function Get-1PassCredential {
     [cmdletBinding()]
     param(
         [parameter(Mandatory="True")][string]$title,
