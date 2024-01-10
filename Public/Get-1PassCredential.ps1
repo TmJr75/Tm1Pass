@@ -7,10 +7,10 @@ Function Get-1PassCredential {
 
     try {
         if ($vaultName) {
-            op item get $title --vault $vaultName | convertfrom-Json
+            $credObject = op item get $title --vault $vaultName | convertfrom-Json
         }
         else {
-            op item get $title | ConvertFrom-Json
+            $credObject = op item get $title | ConvertFrom-Json
         }
     }
     catch {
@@ -18,5 +18,8 @@ Function Get-1PassCredential {
     }
     
 
+    New-Object -TypeName PSCredential `
+        -ArgumentList (($credObject.fields | where-object {$_.Type -like "String" -and $_.purpose -like "UserName"}).value), 
+            (($($credObject.fields | where-object {$_.Type -like "Concealed" -and $_.purpose -like "Password"}).value | convertTo-SecureString -asPlainText -Force))
     
 }
