@@ -5,10 +5,11 @@ Function Get-1PassVaultSecret {
     # List credentials stored in specific vault
 
     if ($vaultName) {
-        op item list --vault $vaultName | ConvertFrom-Json
+        $credList = op item list --vault $vaultName | ConvertFrom-Json
     }
     else {
-        op item list | convertfrom-Json
+        $credList = op item list | convertfrom-Json
     }
     
+    return $credList
 }
