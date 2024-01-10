@@ -7,10 +7,10 @@ Function Get-1PassCredential {
 
     try {
         if ($vaultName) {
-            op item get $title --vault $vaultName | convertfrom-Json -depth 10
+            op item get $title --vault $vaultName | convertfrom-Json
         }
         else {
-            op item get $title | ConvertFrom-Json -depth 10
+            op item get $title | ConvertFrom-Json
         }
     }
     catch {
