@@ -13,10 +13,11 @@ Function New-1PassVault {
     }
     else {
         try {
-            op vault create $vaultName | ConvertFrom-Json
+            $object = op vault create $vaultName | ConvertFrom-Json
+            return $object
         }
         catch {
-            Write-Output "Unable to create vault: $vault"
+            Write-Output "Unable to create vault: $vaultName"
             throw error[0]
         }
     

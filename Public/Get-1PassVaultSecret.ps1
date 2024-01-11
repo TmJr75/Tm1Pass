@@ -6,10 +6,12 @@ Function Get-1PassVaultSecret {
 
     if ($vaultName) {
         $credList = op item list --vault $vaultName | ConvertFrom-Json
+        return $credList
     }
     else {
         $credList = op item list | convertfrom-Json
+        return $credList
     }
     
-    return $credList
+    
 }
