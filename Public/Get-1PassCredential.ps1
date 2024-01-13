@@ -14,12 +14,13 @@ Function Get-1PassCredential {
             -ArgumentList (($credObject.fields | where-object {$_.Type -like "String" -and $_.purpose -like "UserName"}).value), 
                 (($($credObject.fields | where-object {$_.Type -like "Concealed" -and $_.purpose -like "Password"}).value | convertTo-SecureString -asPlainText -Force))
 
-            return $credential
+            
         
         if ($Clipboard) {
             $credential.GetNetworkCredential().password | Set-Clipboard
         }
-    
+        return $credential
+
         }
         else {
             $credObject = op item get $title | ConvertFrom-Json
@@ -28,12 +29,12 @@ Function Get-1PassCredential {
             -ArgumentList (($credObject.fields | where-object {$_.Type -like "String" -and $_.purpose -like "UserName"}).value), 
                 (($($credObject.fields | where-object {$_.Type -like "Concealed" -and $_.purpose -like "Password"}).value | convertTo-SecureString -asPlainText -Force))
 
-            return $credential
+
         
         if ($Clipboard) {
             $credential.GetNetworkCredential().password | Set-Clipboard
         }
-    
+        return $credential
         }
     }
     catch {
