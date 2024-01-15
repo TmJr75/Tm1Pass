@@ -10,6 +10,7 @@ Function New-1PassSecret {
     )
 
     # Check if Credential exist based on Title / UserName and VaultName
+    # Add checks for the different params to create a new cred, cli does not handle missing params too well.
     $Exists = Get-1passCredential -Title $Title -VaultName $VaultName
 
     if ($exists.length -gt 0) {
