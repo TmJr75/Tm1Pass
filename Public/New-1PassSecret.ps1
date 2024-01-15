@@ -1,23 +1,33 @@
-Function Get-1PassSecret {
+Function New-1PassSecret {
     [cmdletBinding()]
     param(
-        [parameter(Mandatory="True")][string]$title,
-        [string]$vaultName
+        [parameter(Mandatory="True")][string]$Title,
+        [parameter(Mandatory="True")][string]$VaultName, 
+        [parameter(Mandatory="True")][string]$UserName,
+        [parameter(Mandatory="True")][securestring]$Password, 
+        [parameter(Mandatory="False")][string]$url,
+        [parameter(Mandatory="Tags")][string]$tags
     )
 
-    try {
-        if ($vaultName) {
-            $object = op item get $title --vault $vaultName | convertfrom-Json
-            return $object
-        }
-        else {
-            $object = op item get $title | ConvertFrom-Json
-            return $object
-        }
+    # Check if Credential exist based on Title / UserName and VaultName
+    $Exists = Get-1passCredential -Title $Title -VaultName $VaultName
+
+    if ($exists.length -gt 0) {
+        Write-Output "Secret already exists, do you wish to create a duplicate?"
     }
-    catch {
-        # Write-Output "Unable to get secret with title: $title"
-        throw "Unable to get secret: $title"
+    else {
+
+        $credObject = New-Object -TypeName pscredential -ArgumentList $UserName,$Password
+
+        Write-Output "Secret does not exist, adding secret"
+        op item create `
+        --category login `
+        --title "$title" `
+        --vault $vaultName `
+        --url $url `
+        --tags $tags `
+        "username=$userName" `
+        "password=$($credObject.GetNetworkCredential().Password)"
     }
     
 }
