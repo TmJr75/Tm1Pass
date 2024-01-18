@@ -1,7 +1,7 @@
 Function Get-1PassCredential {
     [cmdletBinding()]
     param(
-        [parameter(Mandatory="True")][string]$title,
+        [parameter(Mandatory = "True")][string]$title,
         [string]$vaultName, 
         [switch]$Clipboard
     )
@@ -13,16 +13,16 @@ Function Get-1PassCredential {
 
             if ($credObject.length -gt 0) {
                 
-            $credential = New-Object -TypeName PSCredential `
-            -ArgumentList (($credObject.fields | where-object {$_.Type -like "String" -and $_.purpose -like "UserName"}).value), 
-                (($($credObject.fields | where-object {$_.Type -like "Concealed" -and $_.purpose -like "Password"}).value | convertTo-SecureString -asPlainText -Force))
+                $credential = New-Object -TypeName PSCredential `
+                    -ArgumentList (($credObject.fields | where-object { $_.Type -like "String" -and $_.purpose -like "UserName" }).value), 
+                (($($credObject.fields | where-object { $_.Type -like "Concealed" -and $_.purpose -like "Password" }).value | convertTo-SecureString -asPlainText -Force))
 
             
         
-        if ($Clipboard) {
-            $credential.GetNetworkCredential().password | Set-Clipboard
-        }
-        return $credential
+                if ($Clipboard) {
+                    $credential.GetNetworkCredential().password | Set-Clipboard
+                }
+                return $credential
             }
             
 
@@ -33,15 +33,15 @@ Function Get-1PassCredential {
             $credObject = op item get $title | ConvertFrom-Json -ErrorAction Stop
             if ($credObject.length -gt 0) {
                 $credential = New-Object -TypeName PSCredential `
-            -ArgumentList (($credObject.fields | where-object {$_.Type -like "String" -and $_.purpose -like "UserName"}).value), 
-                (($($credObject.fields | where-object {$_.Type -like "Concealed" -and $_.purpose -like "Password"}).value | convertTo-SecureString -asPlainText -Force))
+                    -ArgumentList (($credObject.fields | where-object { $_.Type -like "String" -and $_.purpose -like "UserName" }).value), 
+                (($($credObject.fields | where-object { $_.Type -like "Concealed" -and $_.purpose -like "Password" }).value | convertTo-SecureString -asPlainText -Force))
 
 
         
-        if ($Clipboard) {
-            $credential.GetNetworkCredential().password | Set-Clipboard
-        }
-        return $credential
+                if ($Clipboard) {
+                    $credential.GetNetworkCredential().password | Set-Clipboard
+                }
+                return $credential
             }
             
 
