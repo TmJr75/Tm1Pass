@@ -16,7 +16,7 @@ Function Get-1PassCredential {
             $credObject = op item get $title --vault $vaultName | convertfrom-Json
             # $credObject.length
             
-            if (!$null -eq $credObject) {
+            if ($($credObject | measure-object).count -eq 1) {
                 
                 $returnValue = New-Object -TypeName PSCredential -ArgumentList (($credObject.fields | where-object { $_.Type -like "String" -and $_.id -like "UserName" }).value), (($credObject.fields | where-object { $_.Type -like "Concealed" -and $_.id -like "Password" }).value | convertTo-SecureString -asPlainText -Force)
 
@@ -34,8 +34,7 @@ Function Get-1PassCredential {
                 
             }
             else {
-                Write-Output "Multiple credentials found, nothing to return"
-                Write-Output "Credential Count: $($credObject.count)"
+                Write-Output "Unable to return credentials"
             }
             
 
@@ -45,7 +44,7 @@ Function Get-1PassCredential {
             # Write-Output "No VaultName"
             $credObject = op item get $title | ConvertFrom-Json
             # Write-Output "Finished getting credential2"
-            if (!$null -eq $credObject) {
+            if ($($credObject | measure-object).count -eq 1) {
                 $returnValue = New-Object -TypeName PSCredential -ArgumentList (($credObject.fields | where-object { $_.Type -like "String" -and $_.purpose -like "UserName" }).value), (($credObject.fields | where-object { $_.Type -like "Concealed" -and $_.purpose -like "Password" }).value | convertTo-SecureString -asPlainText -Force)
         
                 if ($Clipboard) {
@@ -59,11 +58,10 @@ Function Get-1PassCredential {
                 }
                 # Write-Output "Return Cred2:"
                 # Write-Output "Credential value: $credential"
-
             }
             else {
-                Write-Output "Multiple credentials found, nothing to return"
-                Write-Output "Credential Count: $($credObject.count)"
+                Write-Output "Unable to return credentials"
+
             }
         }
  #   }
