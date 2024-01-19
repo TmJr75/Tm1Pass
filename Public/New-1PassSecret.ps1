@@ -1,6 +1,6 @@
 Function New-1PassSecret {
-    [cmdletBinding()]
-    param(
+    [CmdletBinding()]
+    Param(
         [parameter(Mandatory="True")][string]$Title,
         [parameter(Mandatory="True")][string]$VaultName, 
         [parameter(Mandatory="True")][string]$UserName,
@@ -8,6 +8,9 @@ Function New-1PassSecret {
         [parameter(Mandatory="False")][string]$url,
         [parameter(Mandatory="Tags")][string]$tags
     )
+
+    $env:OP_FORMAT = "json"
+
 
     $password = Read-Host -Prompt "Please enter your password" -AsSecureString
     # Check if Credential exist based on Title / UserName and VaultName

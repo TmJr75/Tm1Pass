@@ -2,6 +2,9 @@ Function Get-1PassVaultSecret {
     [CmdletBinding()]
     Param([string][parameter(Mandatory=$false)]$vaultName)
 
+    $env:OP_FORMAT = "json"
+
+
     # List credentials stored in specific vault
 
     if ($vaultName) {

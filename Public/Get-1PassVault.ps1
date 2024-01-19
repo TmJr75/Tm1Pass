@@ -2,6 +2,8 @@ Function Get-1PassVault {
     [CmdletBinding()]
     Param()
 
+    $env:OP_FORMAT = "json"
+
     # List vaults in your OnePass account
 
     try {

@@ -2,6 +2,9 @@ Function New-1PassVault {
     [CmdletBinding()]
     Param([string][parameter(Mandatory=$true)]$vaultName)
 
+    $env:OP_FORMAT = "json"
+
+
 
     # Check if vault exists from before
     $vaultList = Get-1passVault
