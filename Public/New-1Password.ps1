@@ -23,6 +23,7 @@ function New-1Password {
         [int]$hasSymbol = $password.IndexOfAny($symbols) -ne -1
 
     }
+    # make sure you atleast have 3 out of 4 check values for password
     until (($hasLowerChar + $hasUpperChar + $hasDigit + $hasSymbol) -ge 3)
 
     if ($SecureString.IsPresent) {
