@@ -1,12 +1,12 @@
 <#
 .DESCRIPTION
 This function removes a credential from your vault based on the Title, Id or Sharelink properties.
-
 .PARAMETER Title
 This parameter can be either the Title of your secret, the Id of the secret, or the Sharelink of the secret.
-
 .PARAMETER VaultName
 Determines what vault the secret will be removed from.
+.SYNOPSIS
+Write more soon here
 #>
 
 
