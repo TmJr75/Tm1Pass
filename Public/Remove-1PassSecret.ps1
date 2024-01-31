@@ -35,13 +35,25 @@ This removes the secret xxxxxx from your vault and puts it in the archive folder
 
     )
 
+    if ($Archive) {
+        try {
+            Write-Output "Trying to remove secret: $Title Vault: $VaultName"
+            op item delete $Title --vault $VaultName --archive
+        }
+        catch {
+            Write-Output "Unable to remove secret: $Title  Vault: $VaultName"
+        }
+    }
+    else {
+        try {
+            Write-Output "Trying to remove secret: $Title Vault: $VaultName"
+            op item delete $Title --vault $VaultName
+        }
+        catch {
+            Write-Output "Unable to remove secret: $Title  Vault: $VaultName"
+        }
+    }
 
-    try {
-        Write-Output "Trying to remove secret: $Title Vault: $VaultName"
-        op item delete $Title --vault $VaultName --archive
-    }
-    catch {
-        Write-Output "Unable to remove secret: $Title  Vault: $VaultName"
-    }
+    
 
 }

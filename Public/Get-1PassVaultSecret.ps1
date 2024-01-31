@@ -7,7 +7,7 @@ Function Get-1PassVaultSecret {
 
     # List credentials stored in specific vault
     # create a PSPropertySet with the default property names
-  [string[]]$visible = 'Id','Title','Category','Tags'
+  [string[]]$visible = 'Id','Title','Category','Tags','Vault'
   [Management.Automation.PSMemberInfo[]]$visibleProperties = [System.Management.Automation.PSPropertySet]::new('DefaultDisplayPropertySet',$visible)
    
   # before outputting, append the PSStandardMembers property:
