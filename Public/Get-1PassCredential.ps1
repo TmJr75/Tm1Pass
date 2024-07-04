@@ -27,6 +27,9 @@ Function Get-1PassCredential {
                     $returnValue.GetNetworkCredential().password | Set-Clipboard
                     return $returnValue
 
+                    start-sleep -Seconds 15
+                    Set-Clipboard $null
+
                 }
                 else {
                     # Write-Output "Return Cred1:"
@@ -54,6 +57,10 @@ Function Get-1PassCredential {
                     $returnValue.GetNetworkCredential().password | Set-Clipboard
                     return $returnValue
 
+                    start-sleep -Seconds 15
+
+                    Set-Clipboard $null
+
                 }
                 else {
                     # Write-Output "Return Cred1:"
@@ -71,6 +78,4 @@ Function Get-1PassCredential {
  #    catch {
   #       Throw $error[0]
   #   }
-    
-
 }

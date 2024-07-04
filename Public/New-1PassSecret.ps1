@@ -6,13 +6,20 @@ Function New-1PassSecret {
         [parameter(Mandatory="True")][string]$UserName,
         # [parameter(Mandatory="True")][securestring]$Password, 
         [parameter(Mandatory="False")][string]$url,
-        [parameter(Mandatory="Tags")][string]$tags
+        [parameter(Mandatory="Tags")][string]$tags,
+        [parameter(Mandatory="False")][switch]$Password
     )
 
     $env:OP_FORMAT = "json"
 
+    if ($Password.IsPresent){
+        $NewPassword = New-1Password -SecureString
+    }
+    else {
+        $NewPassword = Read-Host -Prompt "Please enter your password" -AsSecureString
+    }
 
-    $password = Read-Host -Prompt "Please enter your password" -AsSecureString
+    
     # Check if Credential exist based on Title / UserName and VaultName
     # Add checks for the different params to create a new cred, cli does not handle missing params too well.
     Write-Output "Checking for existing credential"
@@ -24,7 +31,7 @@ Function New-1PassSecret {
     }
     else {
 
-        $credObject = New-Object -TypeName pscredential -ArgumentList $UserName,$Password
+        $credObject = New-Object -TypeName pscredential -ArgumentList $UserName,$NewPassword
 
         Write-Output "Secret does not exist, adding secret"
         $newCred = op item create `
