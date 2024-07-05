@@ -1,22 +1,28 @@
 Function New-1PassSecret {
     [CmdletBinding()]
     Param(
-        [parameter(Mandatory="True")][string]$Title,
-        [parameter(Mandatory="True")][string]$VaultName, 
-        [parameter(Mandatory="True")][string]$UserName,
-        # [parameter(Mandatory="True")][securestring]$Password, 
-        [parameter(Mandatory="False")][string]$url,
-        [parameter(Mandatory="Tags")][string]$tags,
-        [parameter(Mandatory="False")][switch]$Password
+        [parameter(Mandatory=$true)][string]$Title,
+        [parameter(Mandatory=$true)][string]$VaultName, 
+        [parameter(Mandatory=$true)][string]$UserName,
+        [parameter(Mandatory=$false)][securestring]$Password, 
+        [parameter(Mandatory=$false)][string]$url,
+        [parameter(Mandatory=$false)][string]$tags,
+        [parameter(Mandatory=$false)][switch]$AutoFill
     )
 
     $env:OP_FORMAT = "json"
 
-    if ($Password.IsPresent){
-        $NewPassword = New-1Password -SecureString
+    if ($AutoFill.IsPresent){
+        $Password = New-1Password -SecureString
     }
     else {
-        $NewPassword = Read-Host -Prompt "Please enter your password" -AsSecureString
+        if ($Password){
+            Write-Output "Password supplied..."
+        }
+        else {
+            $Password = Read-Host -Prompt "Please enter your password" -AsSecureString
+        }
+        
     }
 
     
@@ -31,7 +37,7 @@ Function New-1PassSecret {
     }
     else {
 
-        $credObject = New-Object -TypeName pscredential -ArgumentList $UserName,$NewPassword
+        $credObject = New-Object -TypeName pscredential -ArgumentList $UserName,$Password
 
         Write-Output "Secret does not exist, adding secret"
         $newCred = op item create `
@@ -43,7 +49,7 @@ Function New-1PassSecret {
         "username=$userName" `
         "password=$($credObject.GetNetworkCredential().Password)"
 
-        return $newCred
+        # return $newCred
     }
     
 }
