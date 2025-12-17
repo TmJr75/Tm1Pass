@@ -25,15 +25,15 @@ Function Get-1PassCredential {
                 
                 if ($Clipboard) {
                     $returnValue.GetNetworkCredential().password | Set-Clipboard
-                    return $returnValue
 
-                    # Start a background job to clear the clipboard after 10 seconds
+                    # start background job to clear clipboard after 10 seconds
                     $null = Start-Job -ScriptBlock {
                       Start-Sleep -Seconds 10
                       Set-Clipboard -Value ""
                       # Write-Host "Clipboard cleared."
                     }
-
+                    # return value
+                    return $returnValue
                 }
                 else {
                     # Write-Output "Return Cred1:"
@@ -59,13 +59,16 @@ Function Get-1PassCredential {
         
                 if ($Clipboard) {
                     $returnValue.GetNetworkCredential().password | Set-Clipboard
-                    return $returnValue
 
+                    # start background job to clear clipboard after 10 seconds
                     $null = Start-Job -ScriptBlock {
                       Start-Sleep -Seconds 10
                       Set-Clipboard -Value ""
                       # Write-Host "Clipboard cleared."
                     }
+
+                    # return value
+                    return $returnValue
 
                 }
                 else {

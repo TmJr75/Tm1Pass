@@ -7,9 +7,9 @@ Recommend running op update after installing it, to check that you have the late
 The wordlist used to generate PassPhrases are the wordlist from John Lawler, link to it can be found on this page: https://websites.umich.edu/~jlawler/wordlist.html
 
 # Functionality to be added
-[ ] Sign In
-[ ] Sign Out
-[ ] Check for CLI Update
-[ ] Information about signed in Account
-[ ] Delete Credential
-[ ] Users within this Account - Management
+[ ] Sign In  
+[ ] Sign Out  
+[ ] Check for CLI Update  
+[ ] Information about signed in Account  
+[ ] Delete Credential  
+[ ] Users within this Account - Management  
